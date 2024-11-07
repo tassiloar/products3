@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Embedded Products Filter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+        #productDisplay {
+            margin-top: 20px;
+        }
+        .product-name {
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<h1>Product Filter (Embedded JSON)</h1>
+
+<!-- Dropdown for category selection and Filter button -->
+<label for="categorySelect">Choose a category:</label>
+<select id="categorySelect">
+    <option value="">All Categories</option>
+</select>
+<button id="filterButton">Filter</button>
+
+<!-- Div for displaying filtered products -->
+<div id="productDisplay"></div>
+
+<script>
+    // Embedded JSON data
+    const products = [
+        {
+            "name": "Vintage T-shirt",
+            "description": "Tie-dye Grateful Dead T-shirt",
+            "price": 35,
+            "categories": ["clothing", "vintage"]
+        },
+        {
+            "name": "Running Shoes",
+            "description": "Lightweight and durable running shoes",
+            "price": 60,
+            "categories": ["footwear", "sport"]
+        },
+        {
+            "name": "Coffee Mug",
+            "description": "Handcrafted ceramic coffee mug",
+            "price": 15,
+            "categories": ["kitchen"]
+        },
+        {
+            "name": "Bluetooth Speaker",
+            "description": "Portable and waterproof Bluetooth speaker",
+            "price": 45,
+            "categories": ["electronics"]
+        },
+        {
+            "name": "Wool Scarf",
+            "description": "Warm and soft wool scarf",
+            "price": 20,
+            "categories": ["clothing"]
+        },
+        {
+            "name": "Cookware Set",
+            "description": "10-piece stainless steel cookware set",
+            "price": 120,
+            "categories": ["kitchen", "home"]
+        },
+        {
+            "name": "Leather Wallet",
+            "description": "Genuine leather wallet with RFID protection",
+            "price": 40,
+            "categories": ["accessories", "fashion"]
+        },
+        {
+            "name": "Wireless Earbuds",
+            "description": "Noise-canceling wireless earbuds",
+            "price": 55,
+            "categories": ["electronics"]
+        }
+    ];
+
+    let categories = new Set();
+    products.forEach(product => {
+        product.categories.forEach(category => {
+            categories.add(category);
+        });
+    });
+
+    categories.forEach(category => {
+        $('#categorySelect').append(`<option value="${category}">${category}</option>`);
+    });
+
+    $('#filterButton').on('click', function() {
+        const selectedCategory = $('#categorySelect').val();
+        $('#productDisplay').empty(); 
+
+        products.forEach(product => {
+            if (selectedCategory === "" || product.categories.includes(selectedCategory)) {
+                $('#productDisplay').append(`<div class="product-name">${product.name}</div>`);
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
